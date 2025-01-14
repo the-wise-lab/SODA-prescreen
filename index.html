@@ -24,6 +24,10 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        input[type="text"].initials {
+            width: 50px;
+            padding: 5px;
+        }
         input[type="checkbox"] {
             margin-right: 10px;
         }
@@ -61,7 +65,7 @@
                 <input type="checkbox" name="english_language" required>
                 2. I have a good command of the English language.
             </label>
-            <input type="text" name="english_language_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="english_language_initials" placeholder="Your initials" required>
             <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -70,16 +74,16 @@
                 <input type="checkbox" name="compliance" required>
                 3. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures.
             </label>
-            <input type="text" name="compliance_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="compliance_initials" placeholder="Your initials" required>
             <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="contraception" required>
-                4. If of childbearing potential, I agree to use a medically accepted and highly effective method of contraception throughout the study.
+                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearinbg potential).
             </label>
-            <input type="text" name="contraception_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="contraception_initials" placeholder="Your initials" required>
             <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -89,45 +93,45 @@
         <div class="form-group">
             <label>
                 <input type="checkbox" name="epilepsy_history" required>
-                1. I have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
+                1. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
             </label>
-            <input type="text" name="epilepsy_history_initials" placeholder="Your initials" required>
+            <<input type="text" class="initials" name="epilepsy_history_initials" placeholder="Your initials" required>
             <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="pregnancy" required>
-                2. I am pregnant or breastfeeding (if female).
+                2. I am not pregnant or breastfeeding.
             </label>
-            <input type="text" name="pregnancy_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="pregnancy_initials" placeholder="Your initials" required>
             <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="alcohol_caffeine" required>
-                3. I currently consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.
+                3. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.
             </label>
-            <input type="text" name="alcohol_caffeine_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="alcohol_caffeine_initials" placeholder="Your initials" required>
             <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="smoking" required>
-                4. I smoke more than 5 cigarettes per day.
+                4. I do not smoke more than 5 cigarettes per day.
             </label>
-            <input type="text" name="smoking_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="smoking_initials" placeholder="Your initials" required>
             <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="illicit_drugs" required>
-                5. I have taken illicit drugs 7 days prior to admission or currently use drugs of abuse.
+                5. I have not taken illicit drugs 7 days prior to admission or currently use drugs of abuse.
             </label>
-            <input type="text" name="illicit_drugs_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="illicit_drugs_initials" placeholder="Your initials" required>
             <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
