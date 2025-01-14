@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>STICSA Questionnaire</h1>
+    <p>Please answer the following questions based on how you typically feel. Use the options provided for each question.</p>
+
+    <form id="sticsa-form">
+        <div class="question">
+            <label>1. I feel calm:</label>
+            <input type="radio" name="question1" value="1" required> Strongly Disagree
+            <input type="radio" name="question1" value="2"> Disagree
+            <input type="radio" name="question1" value="3"> Neutral
+            <input type="radio" name="question1" value="4"> Agree
+            <input type="radio" name="question1" value="5"> Strongly Agree
+        </div>
+
+        <div class="question">
+            <label>2. I feel tense:</label>
+            <input type="radio" name="question2" value="1" required> Strongly Disagree
+            <input type="radio" name="question2" value="2"> Disagree
+            <input type="radio" name="question2" value="3"> Neutral
+            <input type="radio" name="question2" value="4"> Agree
+            <input type="radio" name="question2" value="5"> Strongly Agree
+        </div>
+
+        <!-- Add additional questions as needed -->
+
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('sticsa-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect answers
+            const formData = new FormData(event.target);
+            let totalScore = 0;
+            for (let value of formData.values()) {
+                totalScore += parseInt(value);
+            }
+
+            // Define cutoff score
+            const cutoff = 42;
+            if (totalScore >= cutoff) {
+                alert('You meet the inclusion criteria with a score of ' + totalScore);
+            } else {
+                alert('You do not meet the inclusion criteria. Your score is ' + totalScore);
+            }
+        });
+    </script>
+</body>
+</html>
 
