@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescreen Form - Page 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        textarea {
+            height: 60px;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prescreen Form - Inclusion/Exclusion Criteria</h1>
+    <p>Please read each statement carefully. Confirm whether the statement applies to you by ticking the appropriate box. For each statement, provide your initials to confirm your response and optionally add any comments.</p>
+
+    <form id="prescreen-form">
+        <!-- Inclusion Criteria -->
+        <h2>Inclusion Criteria</h2>
+
+        <div class="form-group">
+            <label for="birthday">1. Enter your date of birth:</label>
+            <input type="date" id="birthday" name="birthday" required>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="english_language" required>
+                2. I have a good command of the English language.
+            </label>
+            <input type="text" name="english_language_initials" placeholder="Your initials" required>
+            <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="compliance" required>
+                3. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures.
+            </label>
+            <input type="text" name="compliance_initials" placeholder="Your initials" required>
+            <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="contraception" required>
+                4. If of childbearing potential, I agree to use a medically accepted and highly effective method of contraception throughout the study.
+            </label>
+            <input type="text" name="contraception_initials" placeholder="Your initials" required>
+            <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <!-- Exclusion Criteria -->
+        <h2>Exclusion Criteria</h2>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="epilepsy_history" required>
+                1. I have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
+            </label>
+            <input type="text" name="epilepsy_history_initials" placeholder="Your initials" required>
+            <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="pregnancy" required>
+                2. I am pregnant or breastfeeding (if female).
+            </label>
+            <input type="text" name="pregnancy_initials" placeholder="Your initials" required>
+            <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="alcohol_caffeine" required>
+                3. I currently consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.
+            </label>
+            <input type="text" name="alcohol_caffeine_initials" placeholder="Your initials" required>
+            <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="smoking" required>
+                4. I smoke more than 5 cigarettes per day.
+            </label>
+            <input type="text" name="smoking_initials" placeholder="Your initials" required>
+            <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="illicit_drugs" required>
+                5. I have taken illicit drugs 7 days prior to admission or currently use drugs of abuse.
+            </label>
+            <input type="text" name="illicit_drugs_initials" placeholder="Your initials" required>
+            <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('prescreen-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const birthday = new Date(document.getElementById('birthday').value);
+            const age = new Date().getFullYear() - birthday.getFullYear();
+            if (age < 18 || age > 55) {
+                alert('You do not meet the age criteria.');
+                return;
+            }
+
+            alert('Form submitted successfully!');
+        });
+    </script>
+</body>
+</html>
