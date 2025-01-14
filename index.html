@@ -3,7 +3,6 @@ layout: default
 title: Prescreen Form
 ---
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +30,7 @@ title: Prescreen Form
             border-radius: 4px;
         }
         input[type="text"].initials {
-            width: 180px;
+            width: 150px;
             padding: 5px;
             display: inline-block;
         }
@@ -88,7 +87,7 @@ title: Prescreen Form
         <div class="form-group">
             <label>
                 <input type="checkbox" name="contraception" required>
-                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearinbg potential).
+                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).
             </label>
             <input type="text" class="initials" name="contraception_initials" placeholder="Your initials" required>
             <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
@@ -102,7 +101,7 @@ title: Prescreen Form
                 <input type="checkbox" name="epilepsy_history" required>
                 1. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
             </label>
-            <<input type="text" class="initials" name="epilepsy_history_initials" placeholder="Your initials" required>
+            <input type="text" class="initials" name="epilepsy_history_initials" placeholder="Your initials" required>
             <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -149,15 +148,26 @@ title: Prescreen Form
         document.getElementById('prescreen-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
+            // Validate all checkboxes are checked
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+            // Validate all initials fields have at least one character
+            const initials = document.querySelectorAll('input.initials');
+            const allInitialized = Array.from(initials).every(input => input.value.trim().length > 0);
+
+            // Validate age is within the range
             const birthday = new Date(document.getElementById('birthday').value);
             const age = new Date().getFullYear() - birthday.getFullYear();
-            if (age < 18 || age > 55) {
-                alert('You do not meet the age criteria.');
-                return;
-            }
+            const isValidAge = age >= 18 && age <= 55;
 
-            alert('Form submitted successfully!');
+            if (allChecked && allInitialized && isValidAge) {
+                window.location.href = 'sticsa.html'; // Redirect to STICSA page
+            } else {
+                alert('Please ensure all criteria are met and valid.');
+            }
         });
     </script>
 </body>
 </html>
+
