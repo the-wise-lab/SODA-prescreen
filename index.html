@@ -3,7 +3,6 @@ layout: default
 title: Prescreen Form
 ---
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +29,9 @@ title: Prescreen Form
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        input[type="text"].initials {
-            width: 180px;
-            padding: 5px;
-            display: inline-block;
+        input[type="text"].age-input {
+            width: 80px;
+            padding: 8px;
         }
         input[type="checkbox"] {
             margin-right: 10px;
@@ -56,15 +54,15 @@ title: Prescreen Form
 </head>
 <body>
     <h1>Prescreen Form - Inclusion/Exclusion Criteria</h1>
-    <p>Please read each statement carefully. Confirm whether the statement applies to you by ticking the appropriate box. For each statement, provide your initials to confirm your response and optionally add any comments.</p>
+    <p>Please read each statement carefully. Confirm whether the statement applies to you by ticking the appropriate box. Optionally, you can add any comments for each statement.</p>
 
     <form id="prescreen-form">
         <!-- Inclusion Criteria -->
         <h2>Inclusion Criteria</h2>
 
         <div class="form-group">
-            <label for="birthday">1. Enter your date of birth:</label>
-            <input type="date" id="birthday" name="birthday" required>
+            <label for="age">1. What is your age (in numbers)?</label>
+            <input type="text" id="age" name="age" class="age-input" maxlength="3" required>
         </div>
 
         <div class="form-group">
@@ -72,7 +70,6 @@ title: Prescreen Form
                 <input type="checkbox" name="english_language" required>
                 2. I have a good command of the English language.
             </label>
-            <input type="text" class="initials" name="english_language_initials" placeholder="Your initials" required>
             <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -81,16 +78,14 @@ title: Prescreen Form
                 <input type="checkbox" name="compliance" required>
                 3. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures.
             </label>
-            <input type="text" class="initials" name="compliance_initials" placeholder="Your initials" required>
             <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label>
                 <input type="checkbox" name="contraception" required>
-                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearinbg potential).
+                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).
             </label>
-            <input type="text" class="initials" name="contraception_initials" placeholder="Your initials" required>
             <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -102,7 +97,6 @@ title: Prescreen Form
                 <input type="checkbox" name="epilepsy_history" required>
                 1. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
             </label>
-            <<input type="text" class="initials" name="epilepsy_history_initials" placeholder="Your initials" required>
             <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -111,7 +105,6 @@ title: Prescreen Form
                 <input type="checkbox" name="pregnancy" required>
                 2. I am not pregnant or breastfeeding.
             </label>
-            <input type="text" class="initials" name="pregnancy_initials" placeholder="Your initials" required>
             <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -120,7 +113,6 @@ title: Prescreen Form
                 <input type="checkbox" name="alcohol_caffeine" required>
                 3. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.
             </label>
-            <input type="text" class="initials" name="alcohol_caffeine_initials" placeholder="Your initials" required>
             <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -129,7 +121,6 @@ title: Prescreen Form
                 <input type="checkbox" name="smoking" required>
                 4. I do not smoke more than 5 cigarettes per day.
             </label>
-            <input type="text" class="initials" name="smoking_initials" placeholder="Your initials" required>
             <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -138,7 +129,6 @@ title: Prescreen Form
                 <input type="checkbox" name="illicit_drugs" required>
                 5. I have not taken illicit drugs 7 days prior to admission or currently use drugs of abuse.
             </label>
-            <input type="text" class="initials" name="illicit_drugs_initials" placeholder="Your initials" required>
             <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -149,15 +139,22 @@ title: Prescreen Form
         document.getElementById('prescreen-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const birthday = new Date(document.getElementById('birthday').value);
-            const age = new Date().getFullYear() - birthday.getFullYear();
-            if (age < 18 || age > 55) {
-                alert('You do not meet the age criteria.');
-                return;
-            }
+            // Validate all checkboxes are checked
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
 
-            alert('Form submitted successfully!');
+            // Validate age is within the range
+            const ageInput = document.getElementById('age').value.trim();
+            const age = parseInt(ageInput, 10);
+            const isValidAge = age >= 18 && age <= 55;
+
+            if (allChecked && isValidAge) {
+                window.location.href = 'sticsa.html'; // Redirect to STICSA page
+            } else {
+                alert('Please ensure all criteria are met and valid.');
+            }
         });
     </script>
 </body>
 </html>
+
