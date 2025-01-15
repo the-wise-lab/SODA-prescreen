@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>STICSA Questionnaire</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h1></h1>
+    <h1>STICSA Questionnaire</h1>
     <p>Please answer the following questions based on how you typically feel. Use the options provided for each question.</p>
 
     <form id="sticsa-form">
@@ -75,12 +75,13 @@
             // Define cutoff score
             const cutoff = 42;
             if (totalScore >= cutoff) {
-                alert('You meet the inclusion criteria with a score of ' + totalScore);
+                window.location.href = 'eligible.html'; // Redirect to eligible page
             } else {
-                alert('You do not meet the inclusion criteria. Your score is ' + totalScore);
+                window.location.href = 'not-eligible.html'; // Redirect to not eligible page
             }
         });
     </script>
 </body>
 </html>
+
 
