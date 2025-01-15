@@ -1,7 +1,5 @@
 theme: jekyll-theme-cayman
 title: Prescreen Form
 description: A clean and simple form page for prescreening participants.
-.site-footer {
-    display: none;
-}
+
 
