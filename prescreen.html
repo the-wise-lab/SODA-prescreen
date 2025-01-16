@@ -99,8 +99,8 @@ title: Prescreen Form
         <div class="form-group">
             <label>4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).</label>
             <div class="options">
-                <label><input type="radio" name="contraception" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="contraception" value="does_not_apply"> This does not apply to me.</label>
+                <label><input type="radio" name="contraception" value="applies" required> I agree.</label>
+                <label><input type="radio" name="contraception" value="does_not_apply"> I do not agree.</label>
             </div>
             <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
         </div>
@@ -145,7 +145,7 @@ title: Prescreen Form
         </div>
 
         <div class="form-group">
-            <label>5. I have not taken illicit drugs 7 days prior to admission or currently use drugs of abuse.</label>
+            <label>5. I do not regularly or currently use any drugs of abuse.</label>
             <div class="options">
                 <label><input type="radio" name="illicit_drugs" value="applies" required> This applies to me.</label>
                 <label><input type="radio" name="illicit_drugs" value="does_not_apply"> This does not apply to me.</label>
@@ -169,10 +169,21 @@ title: Prescreen Form
             const age = parseInt(ageInput, 10);
             const isValidAge = age >= 18 && age <= 55;
 
-            if (allChecked && isValidAge) {
+            // Validate all radio inputs
+            const radioGroups = document.querySelectorAll('.options');
+            let allApplies = true;
+            for (const group of radioGroups) {
+                const selected = group.querySelector('input[type="radio"]:checked');
+                if (!selected || selected.value !== 'applies') {
+                    allApplies = false;
+                    break;
+                }
+            }
+
+            if (isValidAge && allApplies) {
                 window.location.href = 'sticsa.html'; // Redirect to STICSA page
             } else {
-                alert('Please ensure all criteria are met and valid.');
+                window.location.href = 'not-eligible.html'; // Redirect to not eligible page
             }
         });
     </script>
