@@ -33,8 +33,13 @@ title: Prescreen Form
             width: 80px;
             padding: 8px;
         }
-        input[type="checkbox"] {
-            margin-right: 10px;
+        .options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
         }
         textarea {
             height: 60px;
@@ -66,26 +71,29 @@ title: Prescreen Form
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="english_language" required>
-                2. I have a good command of the English language.
-            </label>
+            <label>2. I have a good command of the English language.</label>
+            <div class="options">
+                <label><input type="radio" name="english_language" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="english_language" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="compliance" required>
-                3. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures.
-            </label>
+            <label>3. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures.</label>
+            <div class="options">
+                <label><input type="radio" name="compliance" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="compliance" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="contraception" required>
-                4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).
-            </label>
+            <label>4. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).</label>
+            <div class="options">
+                <label><input type="radio" name="contraception" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="contraception" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
@@ -93,42 +101,47 @@ title: Prescreen Form
         <h2>Exclusion Criteria</h2>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="epilepsy_history" required>
-                1. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.
-            </label>
+            <label>1. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.</label>
+            <div class="options">
+                <label><input type="radio" name="epilepsy_history" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="epilepsy_history" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="pregnancy" required>
-                2. I am not pregnant or breastfeeding.
-            </label>
+            <label>2. I am not pregnant or breastfeeding.</label>
+            <div class="options">
+                <label><input type="radio" name="pregnancy" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="pregnancy" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="alcohol_caffeine" required>
-                3. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.
-            </label>
+            <label>3. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.</label>
+            <div class="options">
+                <label><input type="radio" name="alcohol_caffeine" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="alcohol_caffeine" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="smoking" required>
-                4. I do not smoke more than 5 cigarettes per day.
-            </label>
+            <label>4. I do not smoke more than 5 cigarettes per day.</label>
+            <div class="options">
+                <label><input type="radio" name="smoking" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="smoking" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="illicit_drugs" required>
-                5. I have not taken illicit drugs 7 days prior to admission or currently use drugs of abuse.
-            </label>
+            <label>5. I have not taken illicit drugs 7 days prior to admission or currently use drugs of abuse.</label>
+            <div class="options">
+                <label><input type="radio" name="illicit_drugs" value="applies" required> This applies to me</label>
+                <label><input type="radio" name="illicit_drugs" value="does_not_apply"> This does not apply to me</label>
+            </div>
             <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea>
         </div>
 
