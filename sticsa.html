@@ -17,6 +17,9 @@
             display: block;
             margin-bottom: 5px;
         }
+        .options label {
+            display: block;
+        }
         input[type="radio"] {
             margin-right: 10px;
         }
@@ -28,6 +31,8 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
+            display: block;
+            margin: 20px auto;
         }
         .submit-button:hover {
             background-color: #0056b3;
@@ -36,27 +41,53 @@
 </head>
 <body>
     <h1>STICSA Questionnaire</h1>
-    <p>Please answer the following questions based on how you typically feel. Use the options provided for each question.</p>
-
+    <p><strong>DIRECTIONS:</strong> Below is a list of statements that describe how people feel. Please select the number that best indicates how you feel <strong>right now, at this very moment</strong>, even if this is not how you usually feel.</p>
+    
     <form id="sticsa-form">
-        <!-- Example Questions -->
-        <div class="question">
-            <label>1. I feel calm:</label>
-            <input type="radio" name="q1" value="1" required> Not at all
-            <input type="radio" name="q1" value="2"> A little
-            <input type="radio" name="q1" value="3"> Moderately
-            <input type="radio" name="q1" value="4"> Very much so
-        </div>
+        <!-- Questions 1-21 -->
+        <script>
+            const questions = [
+                "My heart beats fast",
+                "My muscles are tense",
+                "I feel agonized over my problems",
+                "I think that others won’t approve of me",
+                "I feel like I’m missing out on things because I can’t make up my mind",
+                "I feel dizzy",
+                "My muscles feel weak",
+                "I feel trembly and shaky",
+                "I picture some future misfortune",
+                "I can’t get some thought out of my mind",
+                "I have trouble remembering things",
+                "My face feels hot",
+                "I think the worst will happen",
+                "My arms and legs feel stiff",
+                "My throat feels dry",
+                "I keep busy to avoid uncomfortable thoughts",
+                "I cannot concentrate without irrelevant thoughts intruding",
+                "My breathing is fast and shallow",
+                "I worry that I cannot control my thoughts as well as I would like to",
+                "I have butterflies in my stomach",
+                "My palms feel clammy."
+            ];
 
-        <div class="question">
-            <label>2. I feel tense:</label>
-            <input type="radio" name="q2" value="1" required> Not at all
-            <input type="radio" name="q2" value="2"> A little
-            <input type="radio" name="q2" value="3"> Moderately
-            <input type="radio" name="q2" value="4"> Very much so
-        </div>
-
-        <!-- Add more questions as needed -->
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById("sticsa-form");
+                questions.forEach((question, index) => {
+                    const questionDiv = document.createElement("div");
+                    questionDiv.classList.add("question");
+                    questionDiv.innerHTML = `
+                        <label>${index + 1}. ${question}</label>
+                        <div class="options">
+                            <label><input type="radio" name="q${index + 1}" value="1" required> Not at All</label>
+                            <label><input type="radio" name="q${index + 1}" value="2"> A Little</label>
+                            <label><input type="radio" name="q${index + 1}" value="3"> Moderately</label>
+                            <label><input type="radio" name="q${index + 1}" value="4"> Very Much So</label>
+                        </div>
+                    `;
+                    form.insertBefore(questionDiv, form.lastElementChild);
+                });
+            });
+        </script>
 
         <button type="submit" class="submit-button">Submit</button>
     </form>
@@ -65,20 +96,14 @@
         document.getElementById('sticsa-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const reverseScoredItems = ['q1']; // Add reverse-scored item names here
             const formData = new FormData(event.target);
             let totalScore = 0;
-
-            for (let [key, value] of formData.entries()) {
-                let score = parseInt(value, 10);
-                if (reverseScoredItems.includes(key)) {
-                    score = 5 - score; // Reverse score: 1 becomes 4, 2 becomes 3, etc.
-                }
-                totalScore += score;
+            
+            for (let value of formData.values()) {
+                totalScore += parseInt(value, 10);
             }
 
-            const cutoff = 42; // Inclusion cutoff
-
+            const cutoff = 42;
             if (totalScore >= cutoff) {
                 window.location.href = 'eligible.html';
             } else {
@@ -88,6 +113,5 @@
     </script>
 </body>
 </html>
-
 
 
