@@ -9,19 +9,24 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 20px;
+            text-align: center;
         }
-        .question {
-            margin-bottom: 20px;
+        .container {
+            max-width: 600px;
+            margin: auto;
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .options label {
-            display: block;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
         }
-        input[type="radio"] {
-            margin-right: 10px;
+        th {
+            background-color: #f4f4f4;
         }
         .submit-button {
             background-color: #007BFF;
@@ -31,8 +36,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
-            display: block;
-            margin: 20px auto;
+            margin-top: 20px;
         }
         .submit-button:hover {
             background-color: #0056b3;
@@ -40,57 +44,65 @@
     </style>
 </head>
 <body>
-    <h1>STICSA Questionnaire</h1>
-    <p><strong>DIRECTIONS:</strong>State-Trait Inventory of Cognitive and Somatic AnxietySTICSA: Your Mood at this MomentDIRECTIONS: Below is a list of statements which can be used to describe how people feel. Beside each statement are four numbers which indicate the degree with which each statement is self-descriptive of mood at this moment (e.g., 1 =not at all, 4 =very much so). Please read each statement carefully and circle the number which best indicates how you feel right now, at this very moment, even if this is not how you usually feel.</p>
-    
-    <form id="sticsa-form">
-        <!-- Questions 1-21 -->
-        <script>
-            const questions = [
-                "My heart beats fast",
-                "My muscles are tense",
-                "I feel agonized over my problems",
-                "I think that others won’t approve of me",
-                "I feel like I’m missing out on things because I can’t make up my mind",
-                "I feel dizzy",
-                "My muscles feel weak",
-                "I feel trembly and shaky",
-                "I picture some future misfortune",
-                "I can’t get some thought out of my mind",
-                "I have trouble remembering things",
-                "My face feels hot",
-                "I think the worst will happen",
-                "My arms and legs feel stiff",
-                "My throat feels dry",
-                "I keep busy to avoid uncomfortable thoughts",
-                "I cannot concentrate without irrelevant thoughts intruding",
-                "My breathing is fast and shallow",
-                "I worry that I cannot control my thoughts as well as I would like to",
-                "I have butterflies in my stomach",
-                "My palms feel clammy."
-            ];
+    <div class="container">
+        <h1>STICSA Questionnaire</h1>
+        <p><strong>DIRECTIONS:</strong> Below is a list of statements that describe how people feel. Please select the number that best indicates how you feel <strong>right now, at this very moment</strong>, even if this is not how you usually feel.</p>
+        
+        <form id="sticsa-form">
+            <table>
+                <tr>
+                    <th>Statement</th>
+                    <th>Not at All</th>
+                    <th>A Little</th>
+                    <th>Moderately</th>
+                    <th>Very Much So</th>
+                </tr>
+                <script>
+                    const questions = [
+                        "My heart beats fast",
+                        "My muscles are tense",
+                        "I feel agonized over my problems",
+                        "I think that others won’t approve of me",
+                        "I feel like I’m missing out on things because I can’t make up my mind",
+                        "I feel dizzy",
+                        "My muscles feel weak",
+                        "I feel trembly and shaky",
+                        "I picture some future misfortune",
+                        "I can’t get some thought out of my mind",
+                        "I have trouble remembering things",
+                        "My face feels hot",
+                        "I think the worst will happen",
+                        "My arms and legs feel stiff",
+                        "My throat feels dry",
+                        "I keep busy to avoid uncomfortable thoughts",
+                        "I cannot concentrate without irrelevant thoughts intruding",
+                        "My breathing is fast and shallow",
+                        "I worry that I cannot control my thoughts as well as I would like to",
+                        "I have butterflies in my stomach",
+                        "My palms feel clammy."
+                    ];
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const form = document.getElementById("sticsa-form");
-                questions.forEach((question, index) => {
-                    const questionDiv = document.createElement("div");
-                    questionDiv.classList.add("question");
-                    questionDiv.innerHTML = `
-                        <label>${index + 1}. ${question}</label>
-                        <div class="options">
-                            <label><input type="radio" name="q${index + 1}" value="1" required> Not at All</label>
-                            <label><input type="radio" name="q${index + 1}" value="2"> A Little</label>
-                            <label><input type="radio" name="q${index + 1}" value="3"> Moderately</label>
-                            <label><input type="radio" name="q${index + 1}" value="4"> Very Much So</label>
-                        </div>
-                    `;
-                    form.insertBefore(questionDiv, form.lastElementChild);
-                });
-            });
-        </script>
-
-        <button type="submit" class="submit-button">Submit</button>
-    </form>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const form = document.getElementById("sticsa-form");
+                        const table = form.querySelector("table");
+                        
+                        questions.forEach((question, index) => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${index + 1}. ${question}</td>
+                                <td><input type="radio" name="q${index + 1}" value="1" required></td>
+                                <td><input type="radio" name="q${index + 1}" value="2"></td>
+                                <td><input type="radio" name="q${index + 1}" value="3"></td>
+                                <td><input type="radio" name="q${index + 1}" value="4"></td>
+                            `;
+                            table.appendChild(row);
+                        });
+                    });
+                </script>
+            </table>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
 
     <script>
         document.getElementById('sticsa-form').addEventListener('submit', function(event) {
