@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <style>
-    .page-header {
+   .page-header {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start; /* Align everything to the left */
         justify-content: center;
-        text-align: center;
-        padding: 20px; /* Keeps the banner height consistent */
-    }
+        text-align: left;
+        padding: 20px; /* Keeps banner height fixed */
     .banner-container {
         display: flex;
         align-items: center;
@@ -18,8 +17,8 @@
         gap: 10px; /* Adds spacing between logo and title */
     }
     .logo {
-        height: 70%; /* Adjusts relative to the banner */
-        max-height: 150px; /* Prevents excessive growth */
+        height: 170%; /* Adjusts relative to the banner */
+        max-height: 300px; /* Prevents excessive growth */
         width: auto;
     }
     .project-name {
