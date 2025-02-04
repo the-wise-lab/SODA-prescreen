@@ -3,18 +3,27 @@
   <head>
     <meta charset="UTF-8">
     <style>
+    .page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px; /* Keeps the banner height consistent */
+    }
     .banner-container {
         display: flex;
         align-items: center;
-        justify-content: flex-start; /* Align items to the left */
-        gap: 15px; /* Adds spacing between logo and title */
+        justify-content: center;
+        gap: 10px; /* Adds spacing between logo and title */
     }
     .logo {
-        height: 150px; /* Adjust as needed */
+        height: 70%; /* Adjusts relative to the banner */
+        max-height: 50px; /* Prevents excessive growth */
         width: auto;
     }
-      .project-name {
-        margin: 0; /* Removes unwanted spacing */
+    .project-name {
+        margin: 0; /* Removes extra spacing */
     }
 </style>
 
