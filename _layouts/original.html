@@ -2,29 +2,6 @@
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
     <meta charset="UTF-8">
-    <style>
-   .page-header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; /* Align everything to the left */
-        justify-content: center;
-        text-align: left;
-        padding: 20px; /* Keeps banner height fixed */
-    .banner-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px; /* Adds spacing between logo and title */
-    }
-    .logo {
-        height: 170%; /* Adjusts relative to the banner */
-        max-height: 300px; /* Prevents excessive growth */
-        width: auto;
-    }
-    .project-name {
-        margin: 0; /* Removes extra spacing */
-    }
-</style>
 
 {% seo %}
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -39,12 +16,8 @@
     <a id="skip-to-content" href="#content">Skip to the content.</a>
 
     <header class="page-header" role="banner">
-      <div class="banner-container">
-        <img src="{{ '/SODA_logo.webp' | relative_url }}" alt="SODA Logo" class="logo">
-      </div>
-        <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-    
-        <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
     </header>
 
     <main id="content" class="main-content" role="main">
