@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <style>
     .banner-container {
+    position: relative; /* Allows absolute positioning inside */
     display: flex;
-    align-items: center; /* Aligns logo and text horizontally */
-    justify-content: space-between; /* Moves logo to the left, text stays centered */
-    gap: 10px; /* Reduces space between the logo and title */
-    width: 100%; /* Ensures full-width alignment */
-    max-width: 1200px; /* Adjust for content width */
-    margin: 0 auto; /* Centers the whole banner */
-    padding: 0 20px; /* Adds spacing */
+    justify-content: center; /* Keeps text centered */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
     }
+
     .logo {
     position: absolute;
     left: 20px; /* Adjust as needed */
@@ -20,7 +20,7 @@
     transform: translateY(-50%); /* Ensures the logo is vertically centered */
     height: 60px; /* Adjust as needed */
     width: auto;
-}
+    }
     .banner-text {
     flex-grow: 1; /* Allows text to take up the remaining space */
     text-align: center; /* Centers text */
