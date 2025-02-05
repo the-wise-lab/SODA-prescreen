@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <style>
     .banner-container {
-        display: flex;
-        align-items: center; /* Aligns logo and text horizontally */
-        justify-content: center; /* Centers the entire banner content */
-        gap: 15px; /* Adds space between the logo and text */
+    display: flex;
+    align-items: center; /* Aligns logo and text horizontally */
+    justify-content: space-between; /* Moves logo to the left, text stays centered */
+    width: 100%; /* Ensures full-width alignment */
+    max-width: 1200px; /* Adjust for content width */
+    margin: 0 auto; /* Centers the whole banner */
+    padding: 0 20px; /* Adds spacing */
     }
     .logo {
         height: 250px; /* Adjust this value as needed */
@@ -16,10 +19,8 @@
         max-height: 460px; /* Ensures it doesn’t make the banner too large */
     }
     .banner-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center; /* Ensures text remains centered */
+    flex-grow: 1; /* Allows text to take up the remaining space */
+    text-align: center; /* Centers text */
     }
     .page-header {
         padding: 20px; /* Keeps the banner height consistent */
