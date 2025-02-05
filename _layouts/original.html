@@ -14,12 +14,13 @@
     padding: 0 20px; /* Adds spacing */
     }
     .logo {
-        height: 250px; /* Adjust this value as needed */
-        width: auto;
-        justify-content: flex-start; /* Ensures content stays aligned to the left */
-        max-height: 460px; /* Ensures it doesn’t make the banner too large */
-        margin-left: -100px; /* Moves logo further left */
-    }
+    position: absolute;
+    left: 20px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%); /* Ensures the logo is vertically centered */
+    height: 60px; /* Adjust as needed */
+    width: auto;
+}
     .banner-text {
     flex-grow: 1; /* Allows text to take up the remaining space */
     text-align: center; /* Centers text */
