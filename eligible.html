@@ -9,84 +9,91 @@ title: Eligible for SODA Study
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eligible - SODA Study</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 1.9em;
-            color: #157878;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        input[type="email"] {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .submit-button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .submit-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>We are happy to inform you that you have passed the prescreening and are likely to be eligible to participate in the SODA study!
-You are now invited for a medical screening to determine your full eligibilty to participate in the study.</h1>
-    <p>Enter your contact details if you wish to be contacted about joining the study.</p>
-   <form id="contact-form">
-        <input type="text" name="name" placeholder="Your first name" required>
-        <br>
-        <input type="email" name="email" placeholder="Your email address" required>
-        <br>
-        <div class="phone-container">
-            <select name="country-code" required>
-                <option value="+1">+1 (USA)</option>
-                <option value="+44">+44 (UK)</option>
-                <option value="+33">+33 (France)</option>
-                <option value="+49">+49 (Germany)</option>
-                <option value="+61">+61 (Australia)</option>
-                <option value="+91">+91 (India)</option>
-                <option value="other">Other</option>
-            </select>
-            <input type="tel" name="phone" placeholder="Your phone number" required>
+<body class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+            <h1 class="text-2xl font-bold text-green-600 mb-8 text-center">
+                We are happy to inform you that based on your answers you may be eligible to participate in the SODA study.
+            </h1>
+            <p class="text-gray-600 text-center mb-8">
+                We would now like to invite you for an in-person session to confirm your eligibility.
+            </p>
+            <p class="text-gray-600 text-center mb-8">Please enter your contact details below and a member of the study team will be in touch</p>
+            <p class="text-gray-600 text-center mb-8">Thank you for your interest in taking part!</p>
+
+            <form id="contact-form" class="space-y-6">
+                <div>
+                    <input type="text" name="name" placeholder="Your first name" required
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                </div>
+                <div>
+                    <input type="email" name="email" placeholder="Your email address" required
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                </div>
+                <div>
+                    <textarea name="additional-info" placeholder="Any additional information you'd like to share" rows="4"
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit"
+                        class="w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                        Submit
+                    </button>
+                </div>
+            </form>
         </div>
-        <br>
-        <button type="submit" class="submit-button">Submit</button>
-    </form>
+    </div>
 
     <script>
-        document.getElementById('contact-form').addEventListener('submit', function(event) {
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
             event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = {
+                email: formData.get('email'),
+                name: formData.get('name'),
+                free_text: formData.get('additional-info') || ''
+            };
 
-            const name = event.target.name.value.trim();
-            const email = event.target.email.value.trim();
-            const phone = event.target.phone.value.trim();
-            const countryCode = event.target["country-code"].value;
+            if (data.name && data.email) {
+                try {
+                    const response = await fetch('https://sodascreening.thewiselab.org/store_email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-            if (name && email && phone) {
-                alert('Thank you! Your contact details have been recorded.');
-                // Implement further handling (e.g., saving to a database) here.
-            } else {
-                alert('Please fill out all fields correctly.');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    // Hide the form
+                    event.target.style.display = 'none';
+
+                    // Create success message container
+                    const successContainer = document.createElement('div');
+                    successContainer.className = 'text-center space-y-4';
+                    
+                    // Success message
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'p-4 rounded-md bg-green-50 text-green-700';
+                    successMsg.textContent = 'Thank you! Your contact details have been recorded. We will be in touch soon.';
+                    
+                    successContainer.appendChild(successMsg);
+                    event.target.parentNode.appendChild(successContainer);
+
+                } catch (error) {
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'mt-4 p-4 rounded-md bg-red-50 text-red-700';
+                    errorMsg.textContent = 'Sorry, there was a problem submitting your details. Please try again later.';
+                    event.target.appendChild(errorMsg);
+                    
+                    setTimeout(() => errorMsg.remove(), 5000);
+                }
             }
         });
     </script>
