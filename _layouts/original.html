@@ -32,7 +32,46 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+    
+    /* Mobile-friendly adjustments */
+    @media screen and (max-width: 768px) {
+      .banner-container {
+        flex-direction: column;
+        padding: 10px;
+      }
       
+      .logo {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        height: 150px;
+        margin-bottom: 15px;
+      }
+      
+      .banner-text {
+        margin-left: 0;
+      }
+      
+      .project-name {
+        font-size: 1.75rem;
+      }
+      
+      .project-tagline {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Small screen adjustments */
+    @media screen and (max-width: 480px) {
+      .logo {
+        height: 120px;
+      }
+      
+      .project-name {
+        font-size: 1.5rem;
+      }
     }
 </style>
 

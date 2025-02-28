@@ -66,3 +66,46 @@ a:hover {
 .main-content table th {
     font-weight: 600;
 }
+
+/* Mobile-friendly adjustments */
+@media screen and (max-width: 768px) {
+    .banner-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .logo {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        height: 150px;
+        margin-bottom: 0px;
+    }
+    
+    .banner-text {
+        margin-left: 0;
+    }
+    
+    .project-name {
+        font-size: 1.75rem;
+    }
+    
+    .project-tagline {
+        font-size: 1rem;
+        margin-bottom: 0px;
+    }
+    }
+
+@media screen and (max-width: 42em) {
+    .main-content {
+        padding: 2rem 1rem;
+        padding-top: 0rem;
+        font-size: 1rem;
+    }
+
+    .page-header {
+        padding: 0%;
+    }
+
+    }
