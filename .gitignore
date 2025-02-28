@@ -1,0 +1,47 @@
+# Jekyll specific files
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# Ruby gems
+Gemfile.lock
+
+# Mac specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux specific files
+*~
+.directory
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules if you're using any JavaScript tooling
+node_modules/
+
+# Log files
+*.log
+
+# Local configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build files
+/dist/
+/tmp/
