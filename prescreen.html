@@ -7,16 +7,18 @@ title: Prescreen Form
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Prescreen Form - Page 1</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            margin: 20px;
+            padding: 0;
+            max-width: 100%;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            width: 100%;
         }
         .form-group > label {
             display: block;
@@ -28,26 +30,36 @@ title: Prescreen Form
         .options label {
             font-size: 1em;
             color: #333;
+            padding: 8px 0;
+            display: block;
         }
         input[type="text"], input[type="date"], textarea {
             width: 100%;
-            padding: 8px;
+            padding: 12px 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px; /* Prevents zoom on iOS */
+            box-sizing: border-box;
         }
         input[type="text"].age-input {
-            width: 80px;
-            padding: 8px;
+            width: 100px;
+            padding: 12px 8px;
         }
         .options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 10px;
         }
+        .option-item {
+            display: flex;
+            align-items: center;
+        }
         input[type="radio"] {
-            margin-right: 5px;
+            margin-right: 10px;
+            min-width: 20px;
+            min-height: 20px;
         }
         textarea {
             height: 60px;
@@ -56,18 +68,48 @@ title: Prescreen Form
             background-color: #007BFF;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 15px 25px;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
         }
         .submit-button:hover {
             background-color: #0056b3;
         }
+        
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            body {
+                margin: 8px;
+            }
+            .form-group > label {
+                font-size: 1em;
+            }
+            .options label {
+                padding: 10px 0;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            body {
+                margin: 5px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            p {
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="">
     <h1>Prescreen Form</h1>
-    <p>Please read each statement carefully. Confirm whether the statement applies to you by ticking the appropriate box. Optionally, you can add any comments for each statement.</p>
+    <p>Please read each statement carefully. Confirm whether the statement applies to you by ticking the appropriate box.</p>
 
     <form id="prescreen-form">
         <!-- Inclusion Criteria -->
@@ -75,52 +117,52 @@ title: Prescreen Form
 
         <div class="form-group">
             <label for="age">1. What is your age (in numbers)?</label>
-            <input type="text" id="age" name="age" class="age-input" maxlength="3" required>
+            <input type="number" id="age" name="age" class="age-input" maxlength="3" required>
         </div>
 
         <div class="form-group">
             <label>2. I have a good command of the English language.</label>
             <div class="options">
-                <label><input type="radio" name="english_language" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="english_language" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="english_language" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="english_language" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>3. I am able to attend study sessions at Denmark Hill in South London.</label>
             <div class="options">
-                <label><input type="radio" name="travel" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="travel" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="travel" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="travel" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="travel_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="travel_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>4. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures (3 study sessions lasting a full day each within the next 3 months).</label>
             <div class="options">
-                <label><input type="radio" name="compliance" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="compliance" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="compliance" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="compliance" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>5. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).</label>
             <div class="options">
-                <label><input type="radio" name="contraception" value="applies" required> I agree.</label>
-                <label><input type="radio" name="contraception" value="does_not_apply"> I do not agree.</label>
+                <label class="option-item"><input type="radio" name="contraception" value="applies" required> I agree.</label>
+                <label class="option-item"><input type="radio" name="contraception" value="does_not_apply"> I do not agree.</label>
             </div>
-            <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
          <div class="form-group">
             <label>6. I would describe myself as physically healthy (i.e., without any significant medical conditions).</label>
             <div class="options">
-                <label><input type="radio" name="healthy" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="healthy" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="healthy" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="healthy" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="healthy_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="healthy_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <!-- Exclusion Criteria -->
@@ -129,46 +171,46 @@ title: Prescreen Form
         <div class="form-group">
             <label>7. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.</label>
             <div class="options">
-                <label><input type="radio" name="epilepsy_history" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="epilepsy_history" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="epilepsy_history" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="epilepsy_history" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>8. I am not pregnant or breastfeeding.</label>
             <div class="options">
-                <label><input type="radio" name="pregnancy" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="pregnancy" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="pregnancy" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="pregnancy" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>9. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.</label>
             <div class="options">
-                <label><input type="radio" name="alcohol_caffeine" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="alcohol_caffeine" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="alcohol_caffeine" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="alcohol_caffeine" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>10. I do not smoke more than 5 cigarettes per day.</label>
             <div class="options">
-                <label><input type="radio" name="smoking" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="smoking" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="smoking" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="smoking" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <div class="form-group">
             <label>11. I do not regularly or currently use any drugs of abuse.</label>
             <div class="options">
-                <label><input type="radio" name="illicit_drugs" value="applies" required> This applies to me.</label>
-                <label><input type="radio" name="illicit_drugs" value="does_not_apply"> This does not apply to me.</label>
+                <label class="option-item"><input type="radio" name="illicit_drugs" value="applies" required> This applies to me.</label>
+                <label class="option-item"><input type="radio" name="illicit_drugs" value="does_not_apply"> This does not apply to me.</label>
             </div>
-            <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea>
+            <!-- <textarea name="illicit_drugs_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
         <button type="submit" class="submit-button">Submit</button>

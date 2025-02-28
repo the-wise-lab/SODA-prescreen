@@ -1,117 +1,455 @@
+---
+layout: default
+title: Prescreen Form
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STICSA-trait Questionnaire</title>
+    <!-- Add Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            text-align: center;
+        /* Desktop table styles */
+        .desktop-view {
+            display: none;
         }
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-        td:first-child {
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .submit-button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+        
+        .option-cell {
             cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
+            transition: all 0.2s ease;
         }
-        .submit-button:hover {
-            background-color: #0056b3;
+        
+        .option-cell:hover {
+            background-color: #f0f9ff;
+        }
+        
+        .selected {
+            background-color: #3b82f6 !important;
+            color: white;
+        }
+        
+        /* Checkbox styling */
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+        }
+        
+        .selected .checkbox-custom {
+            border-color: white;
+            background-color: white;
+        }
+        
+        .checkbox-custom svg {
+            visibility: hidden;
+        }
+        
+        .selected .checkbox-custom svg {
+            visibility: visible;
+        }
+        
+        /* Mobile card view */
+        .mobile-view .question-card {
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-view .question-text {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 500;
+        }
+        
+        .mobile-view .options-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Change to single column */
+            gap: 8px;
+            padding: 12px;
+        }
+        
+        .mobile-view .option-item {
+            cursor: pointer;
+            padding: 12px; /* Increased padding for better touch target */
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px; /* Increased gap for better spacing */
+            transition: all 0.2s ease;
+        }
+        
+        /* Updated alignment styling */
+        .mobile-view .option-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-gap: 12px;
+        }
+        
+        .mobile-view .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-view .option-text {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .mobile-view .option-item:hover {
+            background-color: #f0f9ff;
+        }
+        
+        .mobile-view .option-item.selected {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* Mobile-specific checkbox styles */
+        .mobile-view .checkbox-custom {
+            width: 24px; /* Larger checkboxes on mobile */
+            height: 24px;
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        
+        @media (min-width: 768px) {
+            .desktop-view {
+                display: block;
+            }
+            
+            .mobile-view {
+                display: none;
+            }
+        }
+
+        /* Highlight unanswered questions */
+        .highlight-unanswered {
+            animation: pulse-highlight 2s ease-in-out;
+        }
+        
+        @keyframes pulse-highlight {
+            0%, 100% { background-color: #fff; }
+            50% { background-color: #fef3c7; }
+        }
+
+        /* Add class for unanswered questions */
+        .unanswered {
+            background-color: #fef3c7 !important;
+            border-color: #f59e0b !important;
+        }
+        
+        .question-card.unanswered .question-text {
+            background-color: #fef3c7 !important;
+            border-color: #f59e0b !important;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- <h1>STICSA Questionnaire</h1> -->
-        <p><strong>DIRECTIONS:</strong> : Below is a list of statements which can be used to describe how people feel. Beside each statement are four numbers which indicate how often each statement is true of you (e.g., 1 - not at all, 4 - very much so). Please read each statement carefully and choose the number which best indicates how often, in general, the statement is true of you.</p>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <p class="text-center mb-4 sm:mb-6 text-base sm:text-lg">
+            <strong>DIRECTIONS:</strong> Below is a list of statements which can be used to describe how people feel. For each statement, select the option which best indicates how often, in general, the statement is true of you.
+        </p>
         
-        <form id="sticsa-form">
-            <table>
-                <tr>
-                    <th>Statement</th>
-                    <th>Not at All (1)</th>
-                    <th>A Little (2)</th>
-                    <th>Moderately (3)</th>
-                    <th>Very Much So (4)</th>
-                </tr>
-                <script>
-                    const questions = [
-                        "My heart beats fast",
-                        "My muscles are tense",
-                        "I feel agonized over my problems",
-                        "I think that others won’t approve of me",
-                        "I feel like I’m missing out on things because I can’t make up my mind",
-                        "I feel dizzy",
-                        "My muscles feel weak",
-                        "I feel trembly and shaky",
-                        "I picture some future misfortune",
-                        "I can’t get some thought out of my mind",
-                        "I have trouble remembering things",
-                        "My face feels hot",
-                        "I think the worst will happen",
-                        "My arms and legs feel stiff",
-                        "My throat feels dry",
-                        "I keep busy to avoid uncomfortable thoughts",
-                        "I cannot concentrate without irrelevant thoughts intruding",
-                        "My breathing is fast and shallow",
-                        "I worry that I cannot control my thoughts as well as I would like to",
-                        "I have butterflies in my stomach",
-                        "My palms feel clammy."
-                    ];
-
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.getElementById("sticsa-form");
-                        const table = form.querySelector("table");
-                        
-                        questions.forEach((question, index) => {
-                            const row = document.createElement("tr");
-                            row.innerHTML = `
-                                <td>${index + 1}. ${question}</td>
-                                <td><input type="radio" name="q${index + 1}" value="1" required></td>
-                                <td><input type="radio" name="q${index + 1}" value="2"></td>
-                                <td><input type="radio" name="q${index + 1}" value="3"></td>
-                                <td><input type="radio" name="q${index + 1}" value="4"></td>
-                            `;
-                            table.appendChild(row);
-                        });
-                    });
-                </script>
-            </table>
-            <button type="submit" class="submit-button">Submit</button>
+        <form id="sticsa-form" class="mt-4 sm:mt-8" novalidate>
+            <!-- Desktop View (Table) -->
+            <div class="desktop-view">
+                <div class="overflow-x-auto shadow-md rounded-lg">
+                    <table class="w-full bg-white" style="table-layout: fixed;">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700">
+                                <th class="py-3 px-4 text-left border-b w-2/5">Statement</th>
+                                <th class="py-3 px-4 text-center border-b w-1/5">Not at All</th>
+                                <th class="py-3 px-4 text-center border-b w-1/5">A Little</th>
+                                <th class="py-3 px-4 text-center border-b w-1/5">Moderately</th>
+                                <th class="py-3 px-4 text-center border-b w-1/5">Very Much So</th>
+                            </tr>
+                        </thead>
+                        <tbody id="desktop-questions-container">
+                            <!-- Questions will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Mobile View (Cards) -->
+            <div class="mobile-view" id="mobile-questions-container">
+                <!-- Cards will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="flex justify-center mt-6 sm:mt-8">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 w-full sm:w-auto">
+                    Submit Responses
+                </button>
+            </div>
         </form>
     </div>
 
     <script>
+        const questions = [
+            "My heart beats fast",
+            "My muscles are tense",
+            "I feel agonized over my problems",
+            "I think that others won't approve of me",
+            "I feel like I'm missing out on things because I can't make up my mind",
+            "I feel dizzy",
+            "My muscles feel weak",
+            "I feel trembly and shaky",
+            "I picture some future misfortune",
+            "I can't get some thought out of my mind",
+            "I have trouble remembering things",
+            "My face feels hot",
+            "I think the worst will happen",
+            "My arms and legs feel stiff",
+            "My throat feels dry",
+            "I keep busy to avoid uncomfortable thoughts",
+            "I cannot concentrate without irrelevant thoughts intruding",
+            "My breathing is fast and shallow",
+            "I worry that I cannot control my thoughts as well as I would like to",
+            "I have butterflies in my stomach",
+            "My palms feel clammy."
+        ];
+        
+        const optionLabels = ["Not at All", "A Little", "Moderately", "Very Much So"];
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Create desktop view (table)
+            const desktopContainer = document.getElementById("desktop-questions-container");
+            
+            // Create mobile view (cards)
+            const mobileContainer = document.getElementById("mobile-questions-container");
+            
+            questions.forEach((question, index) => {
+                const qNum = index + 1;
+                
+                // Create desktop row
+                createDesktopRow(qNum, question, desktopContainer);
+                
+                // Create mobile card
+                createMobileCard(qNum, question, mobileContainer);
+            });
+        });
+        
+        function createDesktopRow(qNum, question, container) {
+            const row = document.createElement("tr");
+            row.className = qNum % 2 === 0 ? "bg-gray-50" : "bg-white";
+            row.dataset.question = qNum; // Add data attribute for easier selection
+            
+            // Question cell
+            const questionCell = document.createElement("td");
+            questionCell.className = "py-3 px-4 border-b";
+            questionCell.textContent = `${qNum}. ${question}`;
+            row.appendChild(questionCell);
+            
+            // Create the option cells
+            for (let i = 1; i <= 4; i++) {
+                const cell = document.createElement("td");
+                cell.className = "option-cell py-3 px-4 text-center border-b";
+                cell.dataset.value = i;
+                cell.dataset.question = qNum;
+                
+                // Create a hidden radio button for form submission
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = `q${qNum}`;
+                radio.value = i;
+                radio.className = "hidden";
+                // Remove required attribute to fix "not focusable" error
+                
+                // Create visual checkbox
+                const checkbox = document.createElement("div");
+                checkbox.className = "checkbox-custom";
+                checkbox.innerHTML = '<svg class="w-4 h-4" fill="#3b82f6" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                
+                cell.appendChild(radio);
+                cell.appendChild(checkbox);
+                row.appendChild(cell);
+                
+                // Add click event
+                cell.addEventListener("click", function() {
+                    handleOptionSelect(qNum, i, this);
+                });
+            }
+            
+            container.appendChild(row);
+        }
+        
+        function createMobileCard(qNum, question, container) {
+            const card = document.createElement("div");
+            card.className = "question-card bg-white";
+            card.dataset.question = qNum; // Add data attribute for easier selection
+            
+            // Question text
+            const questionText = document.createElement("div");
+            questionText.className = "question-text bg-gray-100";
+            questionText.textContent = `${qNum}. ${question}`;
+            card.appendChild(questionText);
+            
+            // Options grid - now a single column
+            const optionsGrid = document.createElement("div");
+            optionsGrid.className = "options-grid";
+            
+            // Create the option items
+            for (let i = 1; i <= 4; i++) {
+                const optionItem = document.createElement("div");
+                optionItem.className = "option-item";
+                optionItem.dataset.value = i;
+                optionItem.dataset.question = qNum;
+                
+                // Create a hidden radio button for form submission
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = `q${qNum}`;
+                radio.value = i;
+                radio.className = "hidden";
+                // Remove required attribute to fix "not focusable" error
+                optionItem.appendChild(radio);
+                
+                // Create checkbox container (left side)
+                const checkboxContainer = document.createElement("div");
+                checkboxContainer.className = "checkbox-container";
+                
+                // Create visual checkbox
+                const checkbox = document.createElement("div");
+                checkbox.className = "checkbox-custom";
+                checkbox.innerHTML = '<svg class="w-4 h-4" fill="#3b82f6" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                checkboxContainer.appendChild(checkbox);
+                
+                optionItem.appendChild(checkboxContainer);
+                
+                // Option text (centered)
+                const optionText = document.createElement("span");
+                optionText.className = "option-text text-base";
+                optionText.textContent = optionLabels[i-1];
+                optionItem.appendChild(optionText);
+                
+                optionsGrid.appendChild(optionItem);
+                
+                // Add click event
+                optionItem.addEventListener("click", function() {
+                    handleOptionSelect(qNum, i, this);
+                });
+            }
+            
+            card.appendChild(optionsGrid);
+            container.appendChild(card);
+        }
+        
+        function handleOptionSelect(qNum, value, element) {
+            // Update both mobile and desktop views
+            
+            // Get all related elements for this question
+            const desktopCells = document.querySelectorAll(`.desktop-view .option-cell[data-question="${qNum}"]`);
+            const mobileItems = document.querySelectorAll(`.mobile-view .option-item[data-question="${qNum}"]`);
+            
+            // Reset all selections in desktop view
+            desktopCells.forEach(cell => {
+                cell.classList.remove("selected");
+                cell.querySelector("input").checked = false;
+            });
+            
+            // Reset all selections in mobile view
+            mobileItems.forEach(item => {
+                item.classList.remove("selected");
+                item.querySelector("input").checked = false;
+            });
+            
+            // Set the new selection in both views
+            const selectedDesktopCell = document.querySelector(`.desktop-view .option-cell[data-question="${qNum}"][data-value="${value}"]`);
+            if (selectedDesktopCell) {
+                selectedDesktopCell.classList.add("selected");
+                selectedDesktopCell.querySelector("input").checked = true;
+            }
+            
+            const selectedMobileItem = document.querySelector(`.mobile-view .option-item[data-question="${qNum}"][data-value="${value}"]`);
+            if (selectedMobileItem) {
+                selectedMobileItem.classList.add("selected");
+                selectedMobileItem.querySelector("input").checked = true;
+            }
+            
+            // Remove unanswered highlighting from this question
+            const desktopRow = document.querySelector(`.desktop-view tr[data-question="${qNum}"]`);
+            if (desktopRow) desktopRow.classList.remove("unanswered");
+            
+            const mobileCard = document.querySelector(`.mobile-view .question-card[data-question="${qNum}"]`);
+            if (mobileCard) mobileCard.classList.remove("unanswered");
+        }
+
         document.getElementById('sticsa-form').addEventListener('submit', function(event) {
             event.preventDefault();
+            
+            // Clear previous unanswered indicators
+            document.querySelectorAll('.unanswered').forEach(el => {
+                el.classList.remove('unanswered');
+            });
+            
+            // Find unanswered questions
+            const totalQuestions = questions.length;
+            const unanswered = [];
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const radioName = `q${i}`;
+                const radios = document.querySelectorAll(`input[name="${radioName}"]`);
+                let answered = false;
+                
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        answered = true;
+                    }
+                });
+                
+                if (!answered) {
+                    unanswered.push(i);
+                }
+            }
+                
+            if (unanswered.length > 0) {
+                // Alert the user
+                alert(`Please answer all questions. You have ${unanswered.length} unanswered question(s).`);
+                
+                // Highlight unanswered questions and scroll to the first one
+                let firstElement = null;
+                
+                unanswered.forEach(qNum => {
+                    // Highlight the unanswered question in desktop view
+                    const desktopRow = document.querySelector(`.desktop-view tr[data-question="${qNum}"]`);
+                    if (desktopRow) {
+                        desktopRow.classList.add("unanswered");
+                        if (!firstElement && window.innerWidth >= 768) {
+                            firstElement = desktopRow;
+                        }
+                    }
+                    
+                    // Highlight the unanswered question in mobile view
+                    const mobileCard = document.querySelector(`.mobile-view .question-card[data-question="${qNum}"]`);
+                    if (mobileCard) {
+                        mobileCard.classList.add("unanswered");
+                        if (!firstElement && window.innerWidth < 768) {
+                            firstElement = mobileCard;
+                        }
+                    }
+                });
+                
+                // Scroll to the first unanswered question
+                if (firstElement) {
+                    firstElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                
+                return;
+            }
 
-            const formData = new FormData(event.target);
+            // If all questions are answered, proceed with submission
+            const formData = new FormData(this);
             let totalScore = 0;
             
             for (let value of formData.values()) {
