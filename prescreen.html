@@ -19,6 +19,7 @@ title: Prescreen Form
         .form-group {
             margin-bottom: 20px;
             width: 100%;
+            transition: background-color 0.3s ease;
         }
         .form-group > label {
             display: block;
@@ -33,7 +34,7 @@ title: Prescreen Form
             padding: 8px 0;
             display: block;
         }
-        input[type="text"], input[type="date"], textarea {
+        input[type="text"], input[type="date"], input[type="number"], textarea {
             width: 100%;
             padding: 12px 8px;
             margin-bottom: 10px;
@@ -81,6 +82,21 @@ title: Prescreen Form
             background-color: #0056b3;
         }
         
+        /* Highlighting for incomplete fields */
+        .highlight-missing {
+            background-color: #ffe6e6;
+            border-left: 4px solid #ff3333;
+            padding-left: 10px;
+            border-radius: 4px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 51, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        }
+        
         /* Responsive adjustments */
         @media screen and (max-width: 768px) {
             body {
@@ -105,6 +121,11 @@ title: Prescreen Form
                 font-size: 0.9em;
             }
         }
+        
+        /* Remove the invalid input styling */
+        /* input:invalid {
+            border: 2px solid #ff3333;
+        } */
     </style>
 </head>
 <body class="">
@@ -115,12 +136,12 @@ title: Prescreen Form
         <!-- Inclusion Criteria -->
        <!-- <h2>Inclusion Criteria</h2> -->
 
-        <div class="form-group">
+        <div class="form-group" id="question-1">
             <label for="age">1. What is your age (in numbers)?</label>
-            <input type="number" id="age" name="age" class="age-input" maxlength="3" required>
+            <input type="number" id="age" name="age" class="age-input" min="18" max="100" step="1" inputmode="numeric" pattern="[0-9]*" required>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-2">
             <label>2. I have a good command of the English language.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="english_language" value="applies" required> This applies to me.</label>
@@ -129,7 +150,7 @@ title: Prescreen Form
             <!-- <textarea name="english_language_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-3">
             <label>3. I am able to attend study sessions at Denmark Hill in South London.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="travel" value="applies" required> This applies to me.</label>
@@ -138,7 +159,7 @@ title: Prescreen Form
             <!-- <textarea name="travel_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-4">
             <label>4. I am willing and able to comply with scheduled visits, dosing plans, laboratory trials, and any other necessary procedures (3 study sessions lasting a full day each within the next 3 months).</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="compliance" value="applies" required> This applies to me.</label>
@@ -147,7 +168,7 @@ title: Prescreen Form
             <!-- <textarea name="compliance_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-5">
             <label>5. I agree to use a medically accepted and highly effective method of contraception throughout the study (if of childbearing potential).</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="contraception" value="applies" required> I agree.</label>
@@ -156,7 +177,7 @@ title: Prescreen Form
             <!-- <textarea name="contraception_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-         <div class="form-group">
+         <div class="form-group" id="question-6">
             <label>6. I would describe myself as physically healthy (i.e., without any significant medical conditions).</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="healthy" value="applies" required> This applies to me.</label>
@@ -168,7 +189,7 @@ title: Prescreen Form
         <!-- Exclusion Criteria -->
        <!-- <h2>Exclusion Criteria</h2> -->
 
-        <div class="form-group">
+        <div class="form-group" id="question-7">
             <label>7. I do not have a current or previous diagnosis of epilepsy, or a family history of epilepsy or seizures.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="epilepsy_history" value="applies" required> This applies to me.</label>
@@ -177,7 +198,7 @@ title: Prescreen Form
             <!-- <textarea name="epilepsy_history_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-8">
             <label>8. I am not pregnant or breastfeeding.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="pregnancy" value="applies" required> This applies to me.</label>
@@ -186,7 +207,7 @@ title: Prescreen Form
             <!-- <textarea name="pregnancy_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-9">
             <label>9. I currently do not consume alcohol in excess of 28 units a week or more than 6 cups of caffeinated drinks per day.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="alcohol_caffeine" value="applies" required> This applies to me.</label>
@@ -195,7 +216,7 @@ title: Prescreen Form
             <!-- <textarea name="alcohol_caffeine_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-10">
             <label>10. I do not smoke more than 5 cigarettes per day.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="smoking" value="applies" required> This applies to me.</label>
@@ -204,7 +225,7 @@ title: Prescreen Form
             <!-- <textarea name="smoking_comments" placeholder="Add comments (optional)"></textarea> -->
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="question-11">
             <label>11. I do not regularly or currently use any drugs of abuse.</label>
             <div class="options">
                 <label class="option-item"><input type="radio" name="illicit_drugs" value="applies" required> This applies to me.</label>
@@ -217,33 +238,101 @@ title: Prescreen Form
     </form>
 
     <script>
-        document.getElementById('prescreen-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Validate all checkboxes are checked
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-
-            // Validate age is within the range
-            const ageInput = document.getElementById('age').value.trim();
-            const age = parseInt(ageInput, 10);
-            const isValidAge = age >= 18 && age <= 55;
-
-            // Validate all radio inputs
-            const radioGroups = document.querySelectorAll('.options');
-            let allApplies = true;
-            for (const group of radioGroups) {
-                const selected = group.querySelector('input[type="radio"]:checked');
-                if (!selected || selected.value !== 'applies') {
-                    allApplies = false;
-                    break;
+        // Add event listener to prevent non-numeric characters in age field
+        document.getElementById('age').addEventListener('keypress', function(e) {
+            // Allow only numbers (0-9)
+            if (e.key < '0' || e.key > '9') {
+                e.preventDefault();
+            }
+        });
+        
+        // Add paste event handler to filter out non-numeric characters
+        document.getElementById('age').addEventListener('paste', function(e) {
+            // Get pasted data
+            let pastedData = (e.clipboardData || window.clipboardData).getData('text');
+            
+            // Filter out non-numeric characters
+            if (!/^\d+$/.test(pastedData)) {
+                e.preventDefault();
+                // If you want to allow pasting only the numeric part:
+                const numericPart = pastedData.replace(/[^\d]/g, '');
+                if (numericPart) {
+                    // Use setTimeout to ensure this happens after the default paste action is prevented
+                    setTimeout(() => {
+                        this.value = numericPart;
+                    }, 0);
                 }
             }
+        });
 
-            if (isValidAge && allApplies) {
-                window.location.href = 'sticsa_full.html'; // Redirect to STICSA page
-            } else {
-                window.location.href = 'not-eligible.html'; // Redirect to not eligible page
+        document.getElementById('prescreen-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Remove existing highlights
+            const highlightedElements = document.querySelectorAll('.highlight-missing');
+            highlightedElements.forEach(element => {
+                element.classList.remove('highlight-missing');
+            });
+            
+            let isValid = true;
+            let firstInvalidElement = null;
+            
+            // Validate age
+            const ageInput = document.getElementById('age');
+            const age = parseInt(ageInput.value.trim(), 10);
+            const isValidAge = !isNaN(age) && age >= 18 && age <= 55;
+            
+            if (!isValidAge) {
+                isValid = false;
+                const ageGroup = document.getElementById('question-1');
+                ageGroup.classList.add('highlight-missing');
+                if (!firstInvalidElement) firstInvalidElement = ageGroup;
+            }
+            
+            // Validate all radio inputs
+            const radioGroups = [
+                { name: 'english_language', element: document.getElementById('question-2') },
+                { name: 'travel', element: document.getElementById('question-3') },
+                { name: 'compliance', element: document.getElementById('question-4') },
+                { name: 'contraception', element: document.getElementById('question-5') },
+                { name: 'healthy', element: document.getElementById('question-6') },
+                { name: 'epilepsy_history', element: document.getElementById('question-7') },
+                { name: 'pregnancy', element: document.getElementById('question-8') },
+                { name: 'alcohol_caffeine', element: document.getElementById('question-9') },
+                { name: 'smoking', element: document.getElementById('question-10') },
+                { name: 'illicit_drugs', element: document.getElementById('question-11') }
+            ];
+            
+            radioGroups.forEach(group => {
+                const selected = document.querySelector(`input[name="${group.name}"]:checked`);
+                if (!selected) {
+                    isValid = false;
+                    group.element.classList.add('highlight-missing');
+                    if (!firstInvalidElement) firstInvalidElement = group.element;
+                }
+            });
+            
+            // If all valid and all radio buttons with "applies" are selected, then eligible
+            if (isValid) {
+                let allApplies = true;
+                radioGroups.forEach(group => {
+                    const selected = document.querySelector(`input[name="${group.name}"]:checked`);
+                    if (selected && selected.value !== 'applies') {
+                        allApplies = false;
+                    }
+                });
+                
+                if (allApplies) {
+                    window.location.href = 'sticsa_full.html'; // Redirect to STICSA page
+                } else {
+                    window.location.href = 'not-eligible.html'; // Redirect to not eligible page
+                }
+            } else if (firstInvalidElement) {
+                // Scroll to the first invalid element with smooth scrolling
+                firstInvalidElement.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center' 
+                });
             }
         });
     </script>
