@@ -47,6 +47,31 @@ title: Eligible for SODA Study
     </div>
 
     <script>
+        // Check if user should be here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for reset parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetParam = urlParams.get('reset');
+            
+            // If reset param is true, clear storage and continue
+            if (resetParam === 'true') {
+                localStorage.removeItem('sodaStudyStatus');
+                localStorage.removeItem('prescreenFormCompleted');
+                localStorage.removeItem('prescreenFormCompletedDate');
+                localStorage.removeItem('prescreenFormResponses');
+                localStorage.removeItem('sticsa_completed');
+                return;
+            }
+            
+            // Verify user is eligible to view this page
+            const status = localStorage.getItem('sodaStudyStatus');
+            
+            if (status !== 'eligible') {
+                // User hasn't been marked as eligible, redirect to index
+                window.location.href = 'index.html';
+            }
+        });
+
         document.getElementById('contact-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
@@ -85,6 +110,9 @@ title: Eligible for SODA Study
                     
                     successContainer.appendChild(successMsg);
                     event.target.parentNode.appendChild(successContainer);
+
+                    // If successful, mark as completed
+                    localStorage.setItem('contact_submitted', 'true');
 
                 } catch (error) {
                     const errorMsg = document.createElement('div');

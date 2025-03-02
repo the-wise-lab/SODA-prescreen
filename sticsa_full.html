@@ -196,6 +196,50 @@ title: Prescreen Form
     </div>
 
     <script>
+        // Check if user should be here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for reset parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetParam = urlParams.get('reset');
+            
+            // If reset param is true, clear storage and continue
+            if (resetParam === 'true') {
+                localStorage.removeItem('sodaStudyStatus');
+                localStorage.removeItem('prescreenFormCompleted');
+                localStorage.removeItem('prescreenFormCompletedDate');
+                localStorage.removeItem('prescreenFormResponses');
+                localStorage.removeItem('sticsa_completed');
+                return;
+            }
+            
+            // Prevent access if prescreen wasn't completed
+            const status = localStorage.getItem('sodaStudyStatus');
+            
+            if (!status || (status !== 'prescreen-completed' && status !== 'sticsa-started')) {
+                // User hasn't completed prescreen, redirect to index
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Update status to show STICSA was started
+            localStorage.setItem('sodaStudyStatus', 'sticsa-started');
+            
+            // Load any previously saved answers
+            const savedAnswers = localStorage.getItem('sticsa_answers');
+            if (savedAnswers) {
+                try {
+                    const answers = JSON.parse(savedAnswers);
+                    for (const [question, value] of Object.entries(answers)) {
+                        // Find and check the appropriate radio button
+                        const qNum = question.replace('q', '');
+                        handleOptionSelect(qNum, value, null);
+                    }
+                } catch (e) {
+                    console.error('Error loading saved answers:', e);
+                }
+            }
+        });
+
         const questions = [
             "My heart beats fast",
             "My muscles are tense",
@@ -452,14 +496,25 @@ title: Prescreen Form
             const formData = new FormData(this);
             let totalScore = 0;
             
-            for (let value of formData.values()) {
+            // Save answers in localStorage
+            const answers = {};
+            for (let i = 1; i <= questions.length; i++) {
+                const radioName = `q${i}`;
+                const value = formData.get(radioName);
+                answers[radioName] = value;
                 totalScore += parseInt(value, 10);
             }
+            
+            localStorage.setItem('sticsa_answers', JSON.stringify(answers));
+            localStorage.setItem('sticsa_completed', 'true');
+            localStorage.setItem('sticsa_score', totalScore.toString());
 
             const cutoff = 42;
             if (totalScore >= cutoff) {
+                localStorage.setItem('sodaStudyStatus', 'eligible');
                 window.location.href = 'eligible.html';
             } else {
+                localStorage.setItem('sodaStudyStatus', 'not-eligible');
                 window.location.href = 'not-eligible.html';
             }
         });

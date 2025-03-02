@@ -69,6 +69,72 @@ description: Exploring decision-making and anxiety
 
     <p>To determine your eligibility for the study, we will need you to answer a few questions. This process will take only a few minutes.</p>
 
-    <button class="proceed-button" onclick="window.location.href='prescreen.html'">Proceed to Prescreening</button>
+    <button class="proceed-button" onclick="proceedToNextStep()">Proceed to Prescreening</button>
+
+    <script>
+        // Check for reset parameter in URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        function proceedToNextStep() {
+            // Check if testing mode is enabled
+            const resetParam = getUrlParameter('reset');
+            if (resetParam === 'true') {
+                // Clear stored data if reset parameter is present
+                localStorage.removeItem('sodaStudyStatus');
+                localStorage.removeItem('prescreenFormCompleted');
+                localStorage.removeItem('prescreenFormCompletedDate');
+                localStorage.removeItem('prescreenFormResponses');
+                localStorage.removeItem('sticsa_completed');
+                
+                // Go to prescreen as a fresh start
+                window.location.href = 'prescreen.html';
+                return;
+            }
+            
+            // Check if the person has a stored status
+            const status = localStorage.getItem('sodaStudyStatus');
+            
+            switch (status) {
+                case 'eligible':
+                    // User previously qualified as eligible, go straight to eligible page
+                    window.location.href = 'eligible.html';
+                    break;
+                    
+                case 'not-eligible':
+                    // User previously found not eligible, go straight to not-eligible page
+                    window.location.href = 'not-eligible.html';
+                    break;
+                    
+                case 'sticsa-started':
+                    // User completed prescreen but didn't finish STICSA, go to STICSA
+                    window.location.href = 'sticsa_full.html';
+                    break;
+                    
+                case 'prescreen-completed':
+                    // User completed prescreen, go to STICSA
+                    window.location.href = 'sticsa_full.html';
+                    break;
+                    
+                default:
+                    // No stored status or any other case, start from the beginning
+                    window.location.href = 'prescreen.html';
+            }
+        }
+        
+        // Run this when the page loads to auto-redirect if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for auto parameter that will automatically redirect
+            const autoRedirect = getUrlParameter('auto');
+            
+            // Only auto-redirect if the parameter is set to true
+            if (autoRedirect === 'true') {
+                // Add a small delay to allow the page to render before redirecting
+                setTimeout(proceedToNextStep, 500);
+            }
+        });
+    </script>
 </body>
 </html>

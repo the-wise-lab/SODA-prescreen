@@ -238,6 +238,41 @@ title: Prescreen Form
     </form>
 
     <script>
+        // Check if user should be here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for reset parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetParam = urlParams.get('reset');
+            
+            // If reset param is true, clear storage and continue
+            if (resetParam === 'true') {
+                localStorage.removeItem('sodaStudyStatus');
+                localStorage.removeItem('prescreenFormCompleted');
+                localStorage.removeItem('prescreenFormCompletedDate');
+                localStorage.removeItem('prescreenFormResponses');
+                localStorage.removeItem('sticsa_completed');
+                return;
+            }
+            
+            // Check status and redirect if needed
+            const status = localStorage.getItem('sodaStudyStatus');
+            
+            if (status) {
+                switch(status) {
+                    case 'eligible':
+                        window.location.href = 'eligible.html';
+                        return;
+                    case 'not-eligible':
+                        window.location.href = 'not-eligible.html';
+                        return;
+                    case 'sticsa-started':
+                    case 'prescreen-completed':
+                        window.location.href = 'sticsa_full.html';
+                        return;
+                }
+            }
+        });
+
         // Add event listener to prevent non-numeric characters in age field
         document.getElementById('age').addEventListener('keypress', function(e) {
             // Allow only numbers (0-9)
@@ -314,6 +349,20 @@ title: Prescreen Form
             
             // If all valid and all radio buttons with "applies" are selected, then eligible
             if (isValid) {
+                // Store the user's responses
+                const formResponses = {
+                    age: document.getElementById('age').value
+                };
+                
+                radioGroups.forEach(group => {
+                    const selected = document.querySelector(`input[name="${group.name}"]:checked`);
+                    formResponses[group.name] = selected ? selected.value : null;
+                });
+                
+                localStorage.setItem('prescreenFormResponses', JSON.stringify(formResponses));
+                localStorage.setItem('prescreenFormCompleted', 'true');
+                localStorage.setItem('prescreenFormCompletedDate', Date.now().toString());
+                
                 let allApplies = true;
                 radioGroups.forEach(group => {
                     const selected = document.querySelector(`input[name="${group.name}"]:checked`);
@@ -323,8 +372,12 @@ title: Prescreen Form
                 });
                 
                 if (allApplies) {
+                    // Mark as having completed prescreen successfully
+                    localStorage.setItem('sodaStudyStatus', 'prescreen-completed');
                     window.location.href = 'sticsa_full.html'; // Redirect to STICSA page
                 } else {
+                    // Mark as not eligible
+                    localStorage.setItem('sodaStudyStatus', 'not-eligible');
                     window.location.href = 'not-eligible.html'; // Redirect to not eligible page
                 }
             } else if (firstInvalidElement) {

@@ -29,5 +29,32 @@ title: Not Eligible for SODA Study
 <body>
     <h1>Unfortunately, you are not eligible to participate in the SODA study at this time.</h1>
     <p>Thank you for your time and interest!</p>
+    
+    <script>
+        // Check if user should be here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for reset parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetParam = urlParams.get('reset');
+            
+            // If reset param is true, clear storage and continue
+            if (resetParam === 'true') {
+                localStorage.removeItem('sodaStudyStatus');
+                localStorage.removeItem('prescreenFormCompleted');
+                localStorage.removeItem('prescreenFormCompletedDate');
+                localStorage.removeItem('prescreenFormResponses');
+                localStorage.removeItem('sticsa_completed');
+                return;
+            }
+            
+            // Verify user should see this page
+            const status = localStorage.getItem('sodaStudyStatus');
+            
+            if (status !== 'not-eligible') {
+                // User hasn't been marked as not eligible, redirect to index
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
 </body>
 </html>

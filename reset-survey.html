@@ -1,0 +1,21 @@
+<script>
+    document.getElementById('reset-button').addEventListener('click', function() {
+        // Clear all survey-related data
+        localStorage.removeItem('sodaStudyStatus');
+        localStorage.removeItem('prescreenFormCompleted');
+        localStorage.removeItem('prescreenFormCompletedDate');
+        localStorage.removeItem('prescreenFormResponses');
+        localStorage.removeItem('sticsa_completed');
+        localStorage.removeItem('sticsa_answers');
+        localStorage.removeItem('sticsa_score');
+        localStorage.removeItem('contact_submitted');
+        
+        // Show success message
+        document.getElementById('success-message').style.display = 'block';
+        
+        // Scroll to success message
+        document.getElementById('success-message').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+</script>
