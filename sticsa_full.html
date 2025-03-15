@@ -517,7 +517,7 @@ title: Prescreen Form
                 localStorage.setItem('sodaStudyStatus', 'not-eligible');
                 
                 // Record the reason for ineligibility but don't send the API request yet
-                const ineligibilityReasons = [`STICSA score below cutoff (${totalScore} < ${cutoff})`];
+                const ineligibilityReasons = [`STICSA score below cutoff`];
                 localStorage.setItem('ineligibilityReasons', JSON.stringify(ineligibilityReasons));
                 localStorage.setItem('sticsa_score', totalScore.toString()); // Still store the score for reference
                 // Remove stage storage
