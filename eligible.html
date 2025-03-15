@@ -69,6 +69,33 @@ title: Eligible for SODA Study
             if (status !== 'eligible') {
                 // User hasn't been marked as eligible, redirect to index
                 window.location.href = 'index.html';
+            } else {
+                // Check if we've already recorded this eligible participant
+                const eligibleRecorded = localStorage.getItem('eligibleRecorded');
+                
+                if (eligibleRecorded !== 'true') {
+                    // Record eligible participant via API
+                    fetch('https://sodascreening.thewiselab.org/record_eligible', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Eligible participant recorded:', data);
+                        // Mark as recorded so we don't count this person multiple times
+                        localStorage.setItem('eligibleRecorded', 'true');
+                    })
+                    .catch(error => {
+                        console.error('Error recording eligible participant:', error);
+                    });
+                }
             }
         });
 
