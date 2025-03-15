@@ -1,21 +1,173 @@
-<script>
-    document.getElementById('reset-button').addEventListener('click', function() {
-        // Clear all survey-related data
-        localStorage.removeItem('sodaStudyStatus');
-        localStorage.removeItem('prescreenFormCompleted');
-        localStorage.removeItem('prescreenFormCompletedDate');
-        localStorage.removeItem('prescreenFormResponses');
-        localStorage.removeItem('sticsa_completed');
-        localStorage.removeItem('sticsa_answers');
-        localStorage.removeItem('sticsa_score');
-        localStorage.removeItem('contact_submitted');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Survey Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffeeba;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #c3e6cb;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        .code-input {
+            margin: 20px 0;
+        }
         
-        // Show success message
-        document.getElementById('success-message').style.display = 'block';
+        .code-input input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+            width: 200px;
+        }
         
-        // Scroll to success message
-        document.getElementById('success-message').scrollIntoView({
-            behavior: 'smooth'
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #bd2130;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: block;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reset Survey Data</h1>
+        
+        <div class="warning">
+            <strong>Warning!</strong> This action will clear all stored survey data from this device.
+            Use this only if you need to retake the survey or if instructed by the study administrator.
+        </div>
+        
+        <div id="success-message" class="success">
+            Survey data has been successfully cleared. You can now take the survey again.
+        </div>
+        
+        <p>
+            This will reset the following information that is stored in the browser's local storage:
+        </p>
+        <ul>
+            <li>Survey completion status</li>
+            <li>Date of completion</li>
+            <li>All saved responses</li>
+            <li>Eligibility status</li>
+            <li>STICSA answers and scores</li>
+        </ul>
+        
+        <div class="code-input">
+            <p><strong>Security verification:</strong> Please enter the reset code to proceed.</p>
+            <input type="password" id="reset-code" placeholder="Enter reset code" />
+            <div id="error-message" class="error-message">Incorrect code. Please try again.</div>
+        </div>
+        
+        <button id="reset-button">Reset Survey Data</button>
+        
+        <a href="index.html" class="back-link">← Back to survey</a>
+    </div>
+
+    <script>
+        document.getElementById('reset-button').addEventListener('click', function() {
+            // Get the entered reset code
+            const enteredCode = document.getElementById('reset-code').value;
+            const correctCode = "SODA2023"; // This is the security code that allows reset
+            
+            // Check if the code is correct
+            if (enteredCode !== correctCode) {
+                // Show error message
+                document.getElementById('error-message').style.display = 'block';
+                
+                // Hide error after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('error-message').style.display = 'none';
+                }, 3000);
+                
+                return; // Don't proceed with reset
+            }
+            
+            // Code is correct, proceed with data reset
+            ["sodaStudyStatus",
+             "prescreenFormCompleted",
+             "prescreenFormCompletedDate",
+             "prescreenFormResponses",
+             "sticsa_completed",
+             "sticsa_answers",
+             "sticsa_score",
+             "contact_submitted",
+             "ineligibilityReasons",
+             "ineligibilityReported",
+             "eligibleRecorded"  // Add this new flag to be cleared
+            ].forEach(key => {
+                try {
+                    localStorage.removeItem(key);
+                } catch(e) {
+                    console.warn(`Unable to remove ${key}`, e);
+                }
+            });
+            
+            // Clear the code input
+            document.getElementById('reset-code').value = '';
+            
+            // Show success message
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('success-message').scrollIntoView({
+                behavior: 'smooth'
+            });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
