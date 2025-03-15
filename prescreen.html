@@ -364,10 +364,37 @@ title: Prescreen Form
                 localStorage.setItem('prescreenFormCompletedDate', Date.now().toString());
                 
                 let allApplies = true;
+                const ineligibilityReasons = [];
+                
+                // Check each criterion that might make someone ineligible
+                if (parseInt(formResponses.age) < 18 || parseInt(formResponses.age) > 55) {
+                    allApplies = false;
+                    ineligibilityReasons.push("Age outside required range (18-55)");
+                }
+                
                 radioGroups.forEach(group => {
                     const selected = document.querySelector(`input[name="${group.name}"]:checked`);
                     if (selected && selected.value !== 'applies') {
                         allApplies = false;
+                        // Map the group name to a more descriptive reason
+                        const reasonMap = {
+                            'english_language': "Insufficient English language proficiency",
+                            'travel': "Unable to attend sessions at Denmark Hill",
+                            'compliance': "Unable to comply with study schedule",
+                            'contraception': "Unwilling to use contraception",
+                            'healthy': "Not physically healthy",
+                            'epilepsy_history': "History of epilepsy",
+                            'pregnancy': "Pregnant or breastfeeding",
+                            'alcohol_caffeine': "Excessive alcohol/caffeine consumption",
+                            'smoking': "Smokes >5 cigarettes per day",
+                            'illicit_drugs': "Uses drugs of abuse"
+                        };
+                        
+                        if (reasonMap[group.name]) {
+                            ineligibilityReasons.push(reasonMap[group.name]);
+                        } else {
+                            ineligibilityReasons.push(`Failed criterion: ${group.name}`);
+                        }
                     }
                 });
                 
@@ -378,6 +405,8 @@ title: Prescreen Form
                 } else {
                     // Mark as not eligible
                     localStorage.setItem('sodaStudyStatus', 'not-eligible');
+                    localStorage.setItem('ineligibilityReasons', JSON.stringify(ineligibilityReasons));
+                    
                     window.location.href = 'not-eligible.html'; // Redirect to not eligible page
                 }
             } else if (firstInvalidElement) {
@@ -388,6 +417,7 @@ title: Prescreen Form
                 });
             }
         });
+        
     </script>
 </body>
 </html>

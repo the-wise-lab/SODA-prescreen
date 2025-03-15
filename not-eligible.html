@@ -44,6 +44,8 @@ title: Not Eligible for SODA Study
                 localStorage.removeItem('prescreenFormCompletedDate');
                 localStorage.removeItem('prescreenFormResponses');
                 localStorage.removeItem('sticsa_completed');
+                localStorage.removeItem('ineligibilityReasons');
+                localStorage.removeItem('ineligibilityReported');
                 return;
             }
             
@@ -53,6 +55,55 @@ title: Not Eligible for SODA Study
             if (status !== 'not-eligible') {
                 // User hasn't been marked as not eligible, redirect to index
                 window.location.href = 'index.html';
+            } else {
+                // Get ineligibility information
+                const reasons = localStorage.getItem('ineligibilityReasons');
+                const alreadyReported = localStorage.getItem('ineligibilityReported');
+
+                console.log(alreadyReported);
+                
+                // Only report if we haven't done so already and we have reasons
+                if (reasons && alreadyReported !== 'true') {
+                    try {
+                        // Parse the reasons from storage
+                        const ineligibilityReasons = JSON.parse(reasons);
+                        
+                        // Create data object for API - no stage included
+                        const data = { 
+                            reasons: ineligibilityReasons
+                        };
+                        
+                        // Add score if available (for STICSA results)
+                        if (localStorage.getItem('sticsa_score')) {
+                            data.score = localStorage.getItem('sticsa_score');
+                        }
+                        
+                        // Send to API
+                        fetch('https://sodascreening.thewiselab.org/record_ineligible', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Ineligibility recorded:', data);
+                            // Mark as reported so we don't report again if page is refreshed
+                            localStorage.setItem('ineligibilityReported', 'true');
+                        })
+                        .catch(error => {
+                            console.error('Error recording ineligibility:', error);
+                        });
+                    } catch (e) {
+                        console.error('Error processing ineligibility reasons:', e);
+                    }
+                }
             }
         });
     </script>
